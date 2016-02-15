@@ -855,5 +855,10 @@ namespace server
     extern bool delayspawn(int type);
 }
 
+namespace server {
+	extern void j_changemap();
+	extern void j_serverupdate();
+}
+
 #endif
 

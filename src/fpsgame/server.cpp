@@ -2067,6 +2067,7 @@ namespace server
         if(smode) smode->cleanup();
         if(!persistbots) aiman::clearai();
 
+		j_changemap();
         gamemode = mode;
         gamemillis = 0;
         gamelimit = ((m_overtime && gamelimit_overtime) ? 1500 : 1000)*servergamelimit;
@@ -2558,6 +2559,7 @@ namespace server
         }
 
         shouldstep = clients.length() > 0;
+        j_serverupdate();
         z_checksleep();
     }
 
@@ -3986,5 +3988,9 @@ namespace server
     #include "z_scripting.h"
     #include "z_genericservercommands.h"
     #include "z_talkbot.h"
+    
+    #include "j_beermod.h"
+    #include "j_match.h"
+    #include "j_clanwar.h"
 }
 

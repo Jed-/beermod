@@ -623,3 +623,6 @@ fpsgame/server-standalone.o: fpsgame/z_talkbot.h
 engine/master-standalone.o: shared/cube.h shared/tools.h shared/geom.h
 engine/master-standalone.o: shared/ents.h shared/command.h shared/iengine.h
 engine/master-standalone.o: shared/igame.h
+
+fpsgame/server.o: fpsgame/j_beermod.h fpsgame/j_match.h fpsgame/j_clanwar.h
+fpsgame/server-standalone.o: fpsgame/j_beermod.h fpsgame/j_match.h fpsgame/j_clanwar.h
