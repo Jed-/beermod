@@ -3993,5 +3993,6 @@ namespace server
     #include "j_beermod.h"
     #include "j_match.h"
     #include "j_clanwar.h"
+    #include "j_share.h"
 }
 

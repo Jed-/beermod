@@ -44,6 +44,11 @@ void j_noclients();
 
 void j_getmatchplayers();
 
+// share
+
+void j_sendmaster();
+void j_share();
+
 // ------------------
 // implementation
 // ------------------
