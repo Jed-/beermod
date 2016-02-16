@@ -28,10 +28,20 @@ const char *j_gamemodes[J_NUMGAMEMODES] = {"ffa", "coop", "teamplay", "insta", "
 bool j_match = false;
 bool j_matchstarted = false;
 unsigned j_matchmsg = 0;
-vector<int> j_matchplayers;
+struct j_matchplayerinfo {
+	int clientnum;
+	char name[MAXNAMELEN+1];
+	j_matchplayerinfo(int _clientnum, char *_name) {
+		clientnum = _clientnum;
+		copystring(name, _name && _name[0] ? _name : "unnamed", MAXNAMELEN+1);
+	}
+};
+vector<j_matchplayerinfo> j_matchplayers;
 
 void j_startmatch(int mode, char *map);
 void j_checkmatch();
+void j_noclients();
+
 void j_getmatchplayers();
 
 // ------------------
@@ -67,4 +77,7 @@ void j_changemap() { // called by server::changemap()
 }
 void j_serverupdate() { // called by server::serverupdate()
 	j_checkmatch();
+}
+void j_noclients() {
+	j_match = false;
 }

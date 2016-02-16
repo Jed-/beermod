@@ -2670,6 +2670,7 @@ namespace server
     {
         z_clearbans(false);
         aiman::clearai();
+        j_noclients();
         z_exectrigger(Z_TRIGGER_NOCLIENTS);
     }
 

@@ -47,21 +47,32 @@ void j_checkmatch() { // check if game is match and do stuff
 		}
 	}
 	if(j_matchstarted) { // game is running
+		// always get lists of players to prevent problems while changing mastermode
+		vector<j_matchplayerinfo> j_lastmatchplayers = gamepaused ? (j_getmatchplayers(), j_matchplayers) : j_matchplayers; // old player list
+		j_getmatchplayers(); // get new player list
+		// if locked, auto-pause when a player leaves, but only if others can unpause the game
 		if(mastermode >= 2) { // if locked, check if any players leave
-			vector<int> j_lastmatchplayers = j_matchplayers; // old player list
-			j_getmatchplayers(); // get new player list
-			loopv(j_lastmatchplayers) { // for each player in old list
-				bool found = false;
-				loopvj(j_matchplayers) { // for each player in new list
-					if(j_lastmatchplayers[i]==j_matchplayers[j]) {
-						found = true;
+			bool hasmaster = false, hasadmin = false;
+			loopv(clients) { // check if any players are holding privilege
+				if(clients[i]->state.state==CS_SPECTATOR || clients[i]->state.aitype!=AI_NONE) continue;
+				if(clients[i]->privilege>=PRIV_ADMIN) hasadmin = true;
+				if(clients[i]->privilege>=PRIV_MASTER) hasmaster = true;
+				if(hasadmin) break;
+			}
+			if(hasadmin || (!restrictpausegame && hasmaster)) { // ensure players have the power to unpause the game themselves before pausing
+				loopv(j_lastmatchplayers) { // for each player in old list
+					bool found = false;
+					loopvj(j_matchplayers) { // for each player in new list
+						if(j_lastmatchplayers[i].clientnum==j_matchplayers[j].clientnum) {
+							found = true;
+							break;
+						}
+					}
+					if(!found && !gamepaused) { // player not found: pause game
+						pausegame(true);
+						sendf(-1, 1, "ris", N_SERVMSG, tempformatstring("[match] game paused because player %s (%d) left", j_lastmatchplayers[i].name, j_lastmatchplayers[i].clientnum));
 						break;
 					}
-				}
-				if(!found) { // player not found: pause game
-					pausegame(true);
-					sendf(-1, 1, "ris", N_SERVMSG, tempformatstring("[match] game paused because client %d left", j_lastmatchplayers[i]));
-					break;
 				}
 			}
 		}
@@ -70,6 +81,9 @@ void j_checkmatch() { // check if game is match and do stuff
 void j_getmatchplayers() { // players involved in the match: all non-spectators
 	j_matchplayers.shrink(0);
 	loopv(clients) {
-		if(clients[i]->state.state!=CS_SPECTATOR) j_matchplayers.add(clients[i]->clientnum);
+		if(clients[i]->state.state!=CS_SPECTATOR) {
+			j_matchplayerinfo mp(clients[i]->clientnum, clients[i]->name);
+			j_matchplayers.add(mp);
+		}
 	}
 }
