@@ -3,8 +3,6 @@
 void j_startcw(char *clan1, char *clan2, int mode, char *map);
 void j_setclans(char *clan1, char *clan2);
 
-// --------------------
-
 void j_startcw(char *clan1, char *clan2, int mode, char *map) {
 	j_startmatch(mode, map);
 	j_setclans(clan1, clan2);

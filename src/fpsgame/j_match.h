@@ -1,13 +1,5 @@
 // beermod match stuff
 
-// ------------------
-// header
-// ------------------
-
-// ------------------
-// implementation
-// ------------------
-
 void j_startmatch(int mode, char *map) { // start match
 	if(mode==1) return; // coop
 	changemap(map, mode); // start map

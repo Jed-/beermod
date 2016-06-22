@@ -863,6 +863,7 @@ namespace server {
 	extern void j_changemap();
 	extern void j_serverupdate();
 	extern void j_noclients();
+	extern void j_clientconnected(int cn);
 }
 
 #endif

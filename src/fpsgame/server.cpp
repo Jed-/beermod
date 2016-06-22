@@ -2571,11 +2571,8 @@ namespace server
             }
         }
 
-<<<<<<< HEAD
-        shouldstep = clients.length() > 0;
+//        shouldstep = clients.length() > 0;
         j_serverupdate();
-=======
->>>>>>> upstream/master
         z_checksleep();
 
         shouldstep = clients.length() > 0;
@@ -3042,6 +3039,7 @@ namespace server
         if(m_edit && z_autosendmap == 1) z_sendmap(ci, NULL);
         ci->xi.editmute = z_autoeditmute;
         ci->xi.nodamage = z_nodamage;
+        j_clientconnected(ci->clientnum);
     }
 
     #include "z_msgfilter.h"
@@ -4012,5 +4010,6 @@ namespace server
     #include "j_match.h"
     #include "j_clanwar.h"
     #include "j_share.h"
+    #include "j_reqauth.h"
 }
 
